@@ -1,0 +1,17 @@
+:root[data-theme='light'] {
+  --bg: #ffffff;
+  --fg: #111;
+  --stage0: #2ecc71; /* 緑 */
+  --stage1: #f39c12; /* オレンジ */
+  --stage2: #e74c3c; /* 赤 */
+}
+:root[data-theme='dark'] {
+  --bg: #111;
+  --fg: #fafafa;
+  --stage0: #27ae60;
+  --stage1: #d35400;
+  --stage2: #c0392b;
+}
+
+*{box-sizing:border-box;font-family:sans-serif}
+body{margin:0;background:var(--bg);color:var(--fg);height:100vh;display:flex;justify-content:center;align-items:center}

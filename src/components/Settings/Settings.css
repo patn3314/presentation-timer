@@ -1,0 +1,13 @@
+fieldset{
+  border:1px solid var(--fg);
+  margin:1rem auto;
+  padding:1rem;
+  max-width:300px;
+  display:grid;
+  gap:0.5rem;
+}
+label{
+  display:flex;
+  justify-content:space-between;
+}
+input,select{width:120px;}

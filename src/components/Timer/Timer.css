@@ -1,0 +1,9 @@
+.timer{
+  font-size:10vw;
+  font-weight:bold;
+  user-select:none;
+  cursor:pointer;
+}
+.stage-0{color:var(--stage0)}
+.stage-1{color:var(--stage1)}
+.stage-2{color:var(--stage2)}
