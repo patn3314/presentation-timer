@@ -1,152 +1,133 @@
-(() => {
-  // 要素
-  const timerEl     = document.getElementById('timer');
-  const inSec       = document.getElementById('input-seconds');
-  const modeSel     = document.getElementById('mode-select');
-  const evtTimeIn   = document.getElementById('event-time');
-  const evtBellSel  = document.getElementById('event-bell-count');
-  const btnAddEvt   = document.getElementById('btn-add-event');
-  const evtListEl   = document.getElementById('event-list');
-  const btnStart    = document.getElementById('btn-start');
-  const btnPause    = document.getElementById('btn-pause');
-  const btnReset    = document.getElementById('btn-reset');
-  const btnFs       = document.getElementById('btn-fullscreen');
-  const btnTheme    = document.getElementById('btn-theme');
-  const btnFloat    = document.getElementById('btn-floating');
-  const audioBell   = document.getElementById('audio-bell');
+(() =>{
+  /* ---------------- 便利関数 ---------------- */
+  const $ = id => document.getElementById(id);
+  const fmt = s => String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+  const buildSelect = (sel,max) =>{
+    for(let i=0;i<=max;i++){
+      const opt=document.createElement('option');
+      opt.value=i;opt.textContent=String(i).padStart(2,'0');
+      sel.appendChild(opt);
+    }
+  };
 
-  let originSec   = 0;
-  let currentSec  = 0;
-  let timerId     = null;
-  let events      = []; // {time, count, fired}
+  /* ---------------- DOM取得 ---------------- */
+  const timerEl   = $('timer');
+  const selMode   = $('sel-mode');
+  const initMin   = $('init-min'), initSec = $('init-sec');
+  const b1m=$('b1-min'), b1s=$('b1-sec');
+  const b2m=$('b2-min'), b2s=$('b2-sec');
+  const b3m=$('b3-min'), b3s=$('b3-sec');
 
-  // mm:ss → 秒
-  function parseTime(str) {
-    const [m, s] = str.split(':').map(v=>parseInt(v,10));
-    if (isNaN(m)||isNaN(s)) return null;
-    return m*60 + s;
-  }
-  // 秒 → mm:ss
-  function fmtTime(s) {
-    const m = Math.floor(s/60);
-    const ss= s%60;
-    return String(m).padStart(2,'0') + ':' + String(ss).padStart(2,'0');
-  }
+  const btnStart=$('btn-start'), btnPause=$('btn-pause'), btnReset=$('btn-reset');
+  const btnTheme=$('btn-theme'), btnFull=$('btn-full'), btnFloat=$('btn-float');
+  const audioBell=$('audio-bell');
 
-  // イベントリスト再描画
-  function renderEvents() {
+  /* ---------------- セレクト初期化 ---------------- */
+  [initMin,initSec,b1m,b1s,b2m,b2s,b3m,b3s].forEach(sel=>{
+    buildSelect(sel,59);
+  });
+
+  /* ---------------- 状態 ---------------- */
+  let cur=0, timerID=null;
+  const events=[];          // {time, count, fired}
+  const ch = new BroadcastChannel('timer_channel'); // 他ウインドウと同期用
+
+  /* ---------------- イベント登録 ---------------- */
+  function setEvents(){
+    events.length=0;                      // clear
+    [[b1m,b1s,1],[b2m,b2s,2],[b3m,b3s,3]].forEach(([mSel,sSel,count])=>{
+      const t=Number(mSel.value)*60+Number(sSel.value);
+      if(t>0) events.push({time:t,count,fired:false});
+    });
     events.sort((a,b)=>a.time-b.time);
-    evtListEl.innerHTML = '';
-    events.forEach((ev,i)=>{
-      const li = document.createElement('li');
-      li.textContent = `${fmtTime(ev.time)} → ${ev.count}ベル`;
-      const btn = document.createElement('button');
-      btn.textContent = '×';
-      btn.onclick = ()=>{
-        events.splice(i,1);
-        renderEvents();
-      };
-      li.appendChild(btn);
-      evtListEl.appendChild(li);
-    });
   }
 
-  // ベル再生
-  function playBell(count) {
-    for (let i=0; i<count; i++){
-      setTimeout(()=>{
-        audioBell.currentTime = 0;
-        audioBell.play();
-      }, i*1000);
+  /* ---------------- ベル処理 ---------------- */
+  function ring(count){
+    for(let i=0;i<count;i++){
+      setTimeout(()=>{audioBell.currentTime=0;audioBell.play();},i*900);
     }
-  }
-  // 色変化
-  function changeColor(count) {
-    const cls = 'timer-bell'+count;
-    timerEl.classList.add(cls);
-    const dur = (count-1)*1000 + 2000;
-    setTimeout(()=>{
-      timerEl.classList.remove('timer-bell1','timer-bell2','timer-bell3');
-    }, dur);
+    timerEl.classList.add('bell'+count);
+    setTimeout(()=>timerEl.classList.remove('bell1','bell2','bell3'),2500);
   }
 
-  // 毎秒処理
-  function tick() {
-    if (modeSel.value === 'countdown') {
-      if (currentSec<=0) {
-        clearInterval(timerId);
-        timerId=null;
-        return;
-      }
-      currentSec--;
-    } else {
-      currentSec++;
-    }
-    timerEl.textContent = fmtTime(currentSec);
+  /* ---------------- 1秒タスク ---------------- */
+  function tick(){
+    if(selMode.value==='down'){
+      if(cur<=0){stop();return;}
+      cur--;
+    }else{cur++;}
+    timerEl.textContent=fmt(cur);
 
-    // 実行済みフラグのないイベントをチェック
     events.forEach(ev=>{
-      if (!ev.fired && currentSec >= ev.time) {
-        ev.fired = true;
-        playBell(ev.count);
-        changeColor(ev.count);
+      if(!ev.fired && cur>=ev.time){
+        ev.fired=true; ring(ev.count);
       }
     });
+    ch.postMessage({type:'update',cur});
   }
 
-  // ボタンクリック群
-  btnAddEvt.addEventListener('click', ()=>{
-    const t = parseTime(evtTimeIn.value);
-    const c = parseInt(evtBellSel.value,10);
-    if (t===null) { alert('時刻をMM:SSの形式で入力してください'); return; }
-    events.push({time:t,count:c,fired:false});
-    renderEvents();
-    evtTimeIn.value='';
-  });
+  /* ---------------- 操作関数 ---------------- */
+  const start = () =>{
+    if(timerID) return;
+    setEvents();
+    cur = (selMode.value==='down')
+          ? Number(initMin.value)*60+Number(initSec.value)
+          : 0;
+    timerEl.textContent=fmt(cur);
+    events.forEach(e=>e.fired=false);
+    timerID=setInterval(tick,1000);
+    ch.postMessage({type:'start',cur,mode:selMode.value,events});
+  };
+  const stop = () =>{
+    clearInterval(timerID);timerID=null;
+    ch.postMessage({type:'pause'});
+  };
+  const reset=()=>{
+    stop();
+    cur = (selMode.value==='down')
+          ? Number(initMin.value)*60+Number(initSec.value):0;
+    timerEl.textContent=fmt(cur);
+    timerEl.classList.remove('bell1','bell2','bell3');
+    events.forEach(e=>e.fired=false);
+    ch.postMessage({type:'reset',cur});
+  };
 
-  btnStart.addEventListener('click', ()=>{
-    if (timerId) return;
-    originSec  = parseInt(inSec.value,10);
-    currentSec = modeSel.value==='countdown'? originSec : 0;
-    events.forEach(ev=>ev.fired=false);
-    timerEl.textContent = fmtTime(currentSec);
-    timerId = setInterval(tick,1000);
-  });
+  /* ---------------- ボタン ---------------- */
+  btnStart.onclick=start;
+  btnPause.onclick=stop;
+  btnReset.onclick=reset;
 
-  btnPause.addEventListener('click', ()=>{
-    if (timerId) clearInterval(timerId);
-    timerId = null;
-  });
-
-  btnReset.addEventListener('click', ()=>{
-    if (timerId) clearInterval(timerId);
-    timerId = null;
-    originSec  = parseInt(inSec.value,10);
-    currentSec = modeSel.value==='countdown'? originSec : 0;
-    events.forEach(ev=>ev.fired=false);
-    timerEl.textContent = fmtTime(currentSec);
-    timerEl.classList.remove('timer-bell1','timer-bell2','timer-bell3');
-  });
-
-  btnFs.addEventListener('click', ()=>{
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
-  });
-
-  btnTheme.addEventListener('click', ()=>{
-    document.body.classList.toggle('light');
+  btnTheme.onclick=()=>{
     document.body.classList.toggle('dark');
-  });
+    document.body.classList.toggle('light');
+  };
+  btnFull.onclick=()=>{
+    if(!document.fullscreenElement){
+      document.documentElement.requestFullscreen();
+    }else{document.exitFullscreen();}
+  };
+  btnFloat.onclick=()=>{
+    // すでにフローティング画面なら元に戻す
+    if(document.body.classList.contains('floating')){
+      document.body.classList.remove('floating');
+      return;
+    }
+    // 新しい小窓を開く
+    window.open(location.pathname+'?floating=1','timerFloat',
+      'width=400,height=200,menubar=no,toolbar=no');
+  };
 
-  btnFloat.addEventListener('click', ()=>{
-    document.body.classList.toggle('floating');
-  });
+  /* ---------------- BroadcastChannel 受信 ---------------- */
+  ch.onmessage = e=>{
+    const msg=e.data;
+    if(location.search.includes('floating')){ // 浮遊窓は受信専用
+      if(msg.type==='update'){timerEl.textContent=fmt(msg.cur);}
+      else if(msg.type==='reset'){timerEl.textContent=fmt(msg.cur);}
+    }
+  };
 
-  // 初期表示
-  originSec  = parseInt(inSec.value,10);
-  currentSec = originSec;
-  timerEl.textContent = fmtTime(currentSec);
+  /* ---------------- 初期描画 ---------------- */
+  if(location.search.includes('floating')) document.body.classList.add('floating');
+  reset();
 })();

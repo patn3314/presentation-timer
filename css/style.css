@@ -1,234 +1,49 @@
-/* ====================
-   カラーバリアブル
-   ==================== */
-:root {
-  --bg: #fff;
-  --fg: #222;
-  --btn-start-bg: #27ae60;
-  --btn-pause-bg: #e67e22;
-  --btn-reset-bg: #c0392b;
-  --evt-border: #888;
+/* ======= 色テーマ変数 ======= */
+:root{
+  --bg:#fff;--fg:#222;
+  --btn-start:#27ae60;--btn-pause:#e67e22;--btn-reset:#c0392b;
+  --evt-border:#888;
 }
-body.light {
-  --bg: #fff;
-  --fg: #222;
-  --evt-border: #888;
+body.dark{
+  --bg:#222;--fg:#eee;--evt-border:#555;
 }
-body.dark {
-  --bg: #222;
-  --fg: #eee;
-  --evt-border: #555;
-}
+body{margin:0;font-family:"Segoe UI",sans-serif;background:var(--bg);color:var(--fg);}
 
-/* ====================
-   リセット＋基本
-   ==================== */
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family:"Segoe UI",sans-serif;
-  background: var(--bg);
-  color: var(--fg);
-  transition: background .3s, color .3s;
-}
-.container {
-  max-width:800px;
-  margin:auto;
-  padding:1rem;
-  display:flex;
-  flex-direction:column;
-  height:100vh;
-}
+/* ======= レイアウト ======= */
+.container{display:flex;flex-direction:column;height:100vh;width:100%;padding:8px;}
+header{display:flex;justify-content:space-between;align-items:center;font-size:1.3rem;}
+.icon-btn{background:none;border:none;font-size:1.3rem;margin-left:6px;color:var(--fg);cursor:pointer}
+.icon-btn:hover{opacity:.8}
+main{flex:1;display:flex;justify-content:center;align-items:center}
+.timer-display{font-size:10vw;font-weight:700;text-align:center;min-height:1em}
 
-/* ====================
-   ヘッダー
-   ==================== */
-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-header h1 {
-  font-size:1.75rem;
-  font-weight:500;
-}
-.header-buttons .icon-btn {
-  font-size:1.2rem;
-  padding:.5rem;
-  margin-left:.5rem;
-  background:transparent;
-  border:none;
-  border-radius:.25rem;
-  color:var(--fg);
-  cursor:pointer;
-  transition:background .2s;
-}
-body.light .icon-btn:hover { background:rgba(0,0,0,0.05); }
-body.dark  .icon-btn:hover { background:rgba(255,255,255,0.1); }
+/* ======= コントロール ======= */
+.controls{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-size:1rem}
+.ctrl-block{display:flex;flex-direction:column}
+.time-select select{font-size:1rem;padding:2px}
+.bell-fieldset{border:1px solid var(--evt-border);padding:4px 6px;font-size:1rem;min-width:160px}
+.bell-row{display:flex;gap:4px;align-items:center;margin-bottom:4px}
+.bell-row:last-child{margin-bottom:0}
 
-/* ====================
-   タイマー表示
-   ==================== */
-main {
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-}
-.timer-display {
-  font-size:5rem;
-  font-weight:600;
-  margin-bottom:1.5rem;
-  transition:color .3s,transform .3s;
-}
+/* ======= ボタン ======= */
+.btn-group{display:flex;justify-content:center;gap:8px;margin:8px 0}
+.btn{border:none;border-radius:4px;padding:8px 16px;font-size:1rem;font-weight:600;color:#fff;cursor:pointer}
+.btn-start{background:var(--btn-start)}.btn-pause{background:var(--btn-pause)}.btn-reset{background:var(--btn-reset)}
+.btn:hover{opacity:.9}
 
-/* ====================
-   基本コントロール
-   ==================== */
-.controls {
-  display:flex;
-  flex-wrap:wrap;
-  gap:1rem;
-  justify-content:center;
-  margin-bottom:1rem;
-}
-.controls label {
-  display:flex;
-  flex-direction:column;
-  font-size:1rem;
-  font-weight:500;
-}
-.controls input,
-.controls select {
-  font-size:1rem;
-  padding:.5rem .75rem;
-  border:1px solid var(--evt-border);
-  border-radius:.25rem;
-  background:transparent;
-  color:var(--fg);
-}
+/* ======= ベル着色 ======= */
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+.bell1{color:#ffd54f;animation:pop .4s}.bell2{color:#ff867c;animation:pop .4s}
+.bell3{color:#ba68c8;animation:pop .4s}
 
-/* ====================
-   イベント設定
-   ==================== */
-.event-controls {
-  width:100%;
-  max-width:600px;
-  margin-bottom:1rem;
-}
-.evt-inputs {
-  display:flex;
-  gap:.5rem;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin-bottom:.5rem;
-}
-.evt-inputs input {
-  width:100px;
-  font-size:1rem;
-  padding:.5rem;
-  border:1px solid var(--evt-border);
-  border-radius:.25rem;
-  text-align:center;
-  background:transparent;
-  color:var(--fg);
-}
-.evt-inputs select { font-size:1rem; padding:.5rem; }
-.btn.small {
-  padding:.5rem 1rem;
-  font-size:.9rem;
-}
-
-/* イベントリスト */
-#event-list {
-  list-style:none;
-  max-height:150px;
-  overflow:auto;
-}
-#event-list li {
-  display:flex;
-  justify-content:space-between;
-  padding:.25rem .5rem;
-  border-bottom:1px solid var(--evt-border);
-  font-size:.95rem;
-}
-#event-list li button {
-  background:transparent;
-  border:none;
-  color:inherit;
-  cursor:pointer;
-}
-
-/* ====================
-   スタート/一時停止/リセット
-   ==================== */
-.btn-group {
-  display:flex;
-  gap:.75rem;
-  margin-top:.5rem;
-}
-.btn {
-  padding:.75rem 1.25rem;
-  font-size:1rem;
-  font-weight:500;
-  border:none;
-  border-radius:.3rem;
-  color:#fff;
-  cursor:pointer;
-  transition:opacity .2s,transform .2s;
-}
-.btn:hover,
-.btn:focus { opacity:.9; transform:translateY(-2px); }
-.btn:active { transform:translateY(0); }
-.btn-start { background:var(--btn-start-bg); }
-.btn-pause { background:var(--btn-pause-bg); }
-.btn-reset { background:var(--btn-reset-bg); }
-
-/* ====================
-   ベル色＋ポップアニメ
-   ==================== */
-@keyframes bellPop {
-  0%   { transform:scale(1); }
-  50%  { transform:scale(1.1); }
-  100% { transform:scale(1); }
-}
-.timer-bell1 {
-  color:#ffac33!important;
-  animation:bellPop .4s ease;
-}
-.timer-bell2 {
-  color:#ff6666!important;
-  animation:bellPop .4s ease;
-}
-.timer-bell3 {
-  color:#bf55ec!important;
-  animation:bellPop .4s ease;
-}
-
-/* ====================
-   フローティングモード
-   ==================== */
+/* ======= フローティングモード ======= */
 body.floating header,
 body.floating .controls,
-body.floating .event-controls,
-body.floating .btn-group,
-body.floating .header-buttons {
-  display:none!important;
-}
-body.floating .container {
-  padding:0;
-}
-body.floating .timer-display {
-  font-size:15vw;
-  margin:0;
-}
+body.floating .btn-group{display:none}
+body.floating .timer-display{font-size:18vw}
+body.floating .container{padding:0}
 
-/* ====================
-   レスポンシブ
-   ==================== */
-@media (max-width:600px) {
-  .timer-display { font-size:4rem; }
-  .controls { flex-direction:column; gap:1rem; }
-  .evt-inputs { flex-direction:column; }
-  .btn-group { flex-direction:column; width:100%; }
+/* ======= スマホ補正 ======= */
+@media(max-width:600px){
+  .timer-display{font-size:16vw}
 }

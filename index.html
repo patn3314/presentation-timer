@@ -1,61 +1,84 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>プレゼンタイマー</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="dark">
   <div class="container">
+
+    <!-- ─ ヘッダー ─ -->
     <header>
-      <h1>プレゼンタイマー</h1>
+      <h1>Timer</h1>
       <div class="header-buttons">
         <button id="btn-theme" class="icon-btn" aria-label="テーマ切替">☀︎/🌙</button>
-        <button id="btn-fullscreen" class="icon-btn" aria-label="全画面切替">⛶</button>
-        <button id="btn-floating" class="icon-btn" aria-label="フローティングモード">🔲</button>
+        <button id="btn-full"  class="icon-btn" aria-label="全画面切替">⛶</button>
+        <button id="btn-float" class="icon-btn" aria-label="フローティング">🗗</button>
+        <a   id="btn-help"  class="icon-btn" aria-label="ヘルプ" href="help.html" target="_blank">?</a>
       </div>
     </header>
 
+    <!-- ─ タイマー表示 ─ -->
     <main>
-      <div class="timer-display" id="timer">00:00</div>
-
-      <div class="controls">
-        <label>
-          初期秒数  
-          <input type="number" id="input-seconds" min="1" value="600"> 秒
-        </label>
-        <label>
-          モード  
-          <select id="mode-select">
-            <option value="countdown">カウントダウン</option>
-            <option value="countup">カウントアップ</option>
-          </select>
-        </label>
-      </div>
-
-      <div class="event-controls">
-        <div class="evt-inputs">
-          <input type="text" id="event-time" placeholder="MM:SS（例 07:00）">
-          <select id="event-bell-count">
-            <option value="1">1ベル</option>
-            <option value="2">2ベル</option>
-            <option value="3">3ベル</option>
-          </select>
-          <button id="btn-add-event" class="btn small">追加</button>
-        </div>
-        <ul id="event-list"></ul>
-      </div>
-
-      <div class="btn-group">
-        <button id="btn-start" class="btn btn-start">開始</button>
-        <button id="btn-pause" class="btn btn-pause">一時停止</button>
-        <button id="btn-reset" class="btn btn-reset">リセット</button>
-      </div>
+      <p id="timer" class="timer-display">00:00</p>
     </main>
 
-    <audio id="audio-bell" src="assets/bell.mp3" preload="auto"></audio>
+    <!-- ─ 各種コントロール ─ -->
+    <section class="controls">
+
+      <!-- カウント方向 & 初期時間 -->
+      <div class="ctrl-block">
+        <label>モード
+          <select id="sel-mode">
+            <option value="down">カウントダウン</option>
+            <option value="up">カウントアップ</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="ctrl-block">
+        <label>開始時間
+          <div class="time-select">
+            <select id="init-min"></select> :
+            <select id="init-sec"></select>
+          </div>
+        </label>
+      </div>
+
+      <!-- ベル設定 (1〜3回目) -->
+      <fieldset class="bell-fieldset">
+        <legend>ベル設定</legend>
+        <div class="bell-row">
+          1回目
+          <select id="b1-min"></select> :
+          <select id="b1-sec"></select>
+        </div>
+        <div class="bell-row">
+          2回目
+          <select id="b2-min"></select> :
+          <select id="b2-sec"></select>
+        </div>
+        <div class="bell-row">
+          3回目
+          <select id="b3-min"></select> :
+          <select id="b3-sec"></select>
+        </div>
+      </fieldset>
+    </section>
+
+    <!-- ─ 実行ボタン ─ -->
+    <div class="btn-group">
+      <button id="btn-start" class="btn btn-start">スタート</button>
+      <button id="btn-pause" class="btn btn-pause">一時停止</button>
+      <button id="btn-reset" class="btn btn-reset">リセット</button>
+    </div>
+
   </div>
+
+  <!-- 効果音 -->
+  <audio id="audio-bell" src="audio/bell.mp3" preload="auto"></audio>
 
   <script src="js/script.js"></script>
 </body>
