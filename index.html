@@ -12,6 +12,10 @@
     <!-- ─ ヘッダー ─ -->
     <header>
       <h1>Timer</h1>
+      <div class="tab-nav">
+        <button id="tab-timer" class="tab-btn active">タイマー</button>
+        <button id="tab-settings" class="tab-btn">設定</button>
+      </div>
       <div class="header-buttons">
         <button id="btn-theme" class="icon-btn" aria-label="テーマ切替">☀︎/🌙</button>
         <button id="btn-full"  class="icon-btn" aria-label="全画面切替">⛶</button>
@@ -20,61 +24,73 @@
       </div>
     </header>
 
-    <!-- ─ タイマー表示 ─ -->
-    <main>
-      <p id="timer" class="timer-display">00:00</p>
-    </main>
+    <!-- タブコンテンツ -->
+    <div class="tab-content">
+      <!-- ─ タイマータブ ─ -->
+      <div id="timer-tab" class="tab-pane active">
+        <!-- ─ タイマー表示 ─ -->
+        <main>
+          <p id="timer" class="timer-display">00:00</p>
+        </main>
 
-    <!-- ─ 各種コントロール ─ -->
-    <section class="controls">
-
-      <!-- カウント方向 & 初期時間 -->
-      <div class="ctrl-block">
-        <label>モード
-          <select id="sel-mode">
-            <option value="down">カウントダウン</option>
-            <option value="up">カウントアップ</option>
-          </select>
-        </label>
+        <!-- ─ 実行ボタン ─ -->
+        <div class="btn-group">
+          <button id="btn-start" class="btn btn-start">スタート</button>
+          <button id="btn-pause" class="btn btn-pause">一時停止</button>
+          <button id="btn-reset" class="btn btn-reset">リセット</button>
+        </div>
       </div>
 
-      <div class="ctrl-block">
-        <label>開始時間
-          <div class="time-select">
-            <select id="init-min"></select> :
-            <select id="init-sec"></select>
-          </div>
-        </label>
+      <!-- ─ 設定タブ ─ -->
+      <div id="settings-tab" class="tab-pane">
+        <!-- ─ 各種コントロール ─ -->
+        <section class="controls">
+          <!-- カウント方向 -->
+          <fieldset class="setting-fieldset">
+            <legend class="setting-legend">モード</legend>
+            <div class="setting-content">
+              <select id="sel-mode" class="large-select">
+                <option value="down">カウントダウン</option>
+                <option value="up">カウントアップ</option>
+              </select>
+            </div>
+          </fieldset>
+
+          <!-- 初期時間 -->
+          <fieldset class="setting-fieldset">
+            <legend class="setting-legend">開始時間</legend>
+            <div class="setting-content">
+              <div class="time-select">
+                <select id="init-min" class="large-select"></select> :
+                <select id="init-sec" class="large-select"></select>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- ベル設定 (1〜3回目) -->
+          <fieldset class="setting-fieldset">
+            <legend class="setting-legend">ベル設定</legend>
+            <div class="setting-content">
+              <div class="bell-row">
+                <span class="bell-label">1回目</span>
+                <select id="b1-min" class="large-select"></select> :
+                <select id="b1-sec" class="large-select"></select>
+              </div>
+              <div class="bell-row">
+                <span class="bell-label">2回目</span>
+                <select id="b2-min" class="large-select"></select> :
+                <select id="b2-sec" class="large-select"></select>
+              </div>
+              <div class="bell-row">
+                <span class="bell-label">3回目</span>
+                <select id="b3-min" class="large-select"></select> :
+                <select id="b3-sec" class="large-select"></select>
+              </div>
+            </div>
+          </fieldset>
+        </section>
       </div>
-
-      <!-- ベル設定 (1〜3回目) -->
-      <fieldset class="bell-fieldset">
-        <legend>ベル設定</legend>
-        <div class="bell-row">
-          1回目
-          <select id="b1-min"></select> :
-          <select id="b1-sec"></select>
-        </div>
-        <div class="bell-row">
-          2回目
-          <select id="b2-min"></select> :
-          <select id="b2-sec"></select>
-        </div>
-        <div class="bell-row">
-          3回目
-          <select id="b3-min"></select> :
-          <select id="b3-sec"></select>
-        </div>
-      </fieldset>
-    </section>
-
-    <!-- ─ 実行ボタン ─ -->
-    <div class="btn-group">
-      <button id="btn-start" class="btn btn-start">スタート</button>
-      <button id="btn-pause" class="btn btn-pause">一時停止</button>
-      <button id="btn-reset" class="btn btn-reset">リセット</button>
     </div>
-
   </div>
 
   <!-- 効果音 -->
