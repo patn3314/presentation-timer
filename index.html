@@ -13,39 +13,50 @@
       <div class="header-buttons">
         <button id="btn-theme" class="icon-btn" aria-label="テーマ切替">☀︎/🌙</button>
         <button id="btn-fullscreen" class="icon-btn" aria-label="全画面切替">⛶</button>
+        <button id="btn-floating" class="icon-btn" aria-label="フローティングモード">🔲</button>
       </div>
     </header>
+
     <main>
       <div class="timer-display" id="timer">00:00</div>
+
       <div class="controls">
         <label>
-          初期秒数
-          <input type="number" id="input-seconds" min="1" value="300"> 秒
+          初期秒数  
+          <input type="number" id="input-seconds" min="1" value="600"> 秒
         </label>
         <label>
-          モード
+          モード  
           <select id="mode-select">
             <option value="countdown">カウントダウン</option>
             <option value="countup">カウントアップ</option>
           </select>
         </label>
-        <label>
-          ベル回数
-          <select id="bell-count">
+      </div>
+
+      <div class="event-controls">
+        <div class="evt-inputs">
+          <input type="text" id="event-time" placeholder="MM:SS（例 07:00）">
+          <select id="event-bell-count">
             <option value="1">1ベル</option>
             <option value="2">2ベル</option>
             <option value="3">3ベル</option>
           </select>
-        </label>
-        <div class="btn-group">
-          <button id="btn-start" class="btn btn-start">開始</button>
-          <button id="btn-pause" class="btn btn-pause">一時停止</button>
-          <button id="btn-reset" class="btn btn-reset">リセット</button>
+          <button id="btn-add-event" class="btn small">追加</button>
         </div>
+        <ul id="event-list"></ul>
+      </div>
+
+      <div class="btn-group">
+        <button id="btn-start" class="btn btn-start">開始</button>
+        <button id="btn-pause" class="btn btn-pause">一時停止</button>
+        <button id="btn-reset" class="btn btn-reset">リセット</button>
       </div>
     </main>
+
     <audio id="audio-bell" src="assets/bell.mp3" preload="auto"></audio>
   </div>
+
   <script src="js/script.js"></script>
 </body>
 </html>

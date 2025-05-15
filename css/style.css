@@ -1,175 +1,234 @@
-/*---------------------------------
-  カラーバリアブル
----------------------------------*/
+/* ====================
+   カラーバリアブル
+   ==================== */
 :root {
   --bg: #fff;
   --fg: #222;
   --btn-start-bg: #27ae60;
   --btn-pause-bg: #e67e22;
   --btn-reset-bg: #c0392b;
+  --evt-border: #888;
 }
 body.light {
   --bg: #fff;
   --fg: #222;
+  --evt-border: #888;
 }
 body.dark {
   --bg: #222;
   --fg: #eee;
+  --evt-border: #555;
 }
 
-/*---------------------------------
-  リセット＋基本
----------------------------------*/
+/* ====================
+   リセット＋基本
+   ==================== */
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
-  font-family: "Segoe UI", sans-serif;
+  font-family:"Segoe UI",sans-serif;
   background: var(--bg);
   color: var(--fg);
-  transition: background 0.3s, color 0.3s;
+  transition: background .3s, color .3s;
 }
 .container {
-  max-width: 800px;
-  margin: auto;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+  max-width:800px;
+  margin:auto;
+  padding:1rem;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
 }
 
-/*---------------------------------
-  ヘッダー
----------------------------------*/
+/* ====================
+   ヘッダー
+   ==================== */
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 header h1 {
-  font-size: 1.75rem;
-  font-weight: 500;
+  font-size:1.75rem;
+  font-weight:500;
 }
 .header-buttons .icon-btn {
-  font-size: 1.2rem;
-  padding: 0.5rem 0.75rem;
-  margin-left: 0.5rem;
-  background: transparent;
-  border: none;
-  border-radius: 0.25rem;
-  color: var(--fg);
-  cursor: pointer;
-  transition: background 0.2s;
+  font-size:1.2rem;
+  padding:.5rem;
+  margin-left:.5rem;
+  background:transparent;
+  border:none;
+  border-radius:.25rem;
+  color:var(--fg);
+  cursor:pointer;
+  transition:background .2s;
 }
-body.light .icon-btn:hover { background: rgba(0,0,0,0.05); }
-body.dark  .icon-btn:hover { background: rgba(255,255,255,0.1); }
+body.light .icon-btn:hover { background:rgba(0,0,0,0.05); }
+body.dark  .icon-btn:hover { background:rgba(255,255,255,0.1); }
 
-/*---------------------------------
-  メイン
----------------------------------*/
+/* ====================
+   タイマー表示
+   ==================== */
 main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 .timer-display {
-  font-size: 5rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  transition: color 0.3s, transform 0.3s;
+  font-size:5rem;
+  font-weight:600;
+  margin-bottom:1.5rem;
+  transition:color .3s,transform .3s;
 }
 
-/*---------------------------------
-  コントロール
----------------------------------*/
+/* ====================
+   基本コントロール
+   ==================== */
 .controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
+  display:flex;
+  flex-wrap:wrap;
+  gap:1rem;
+  justify-content:center;
+  margin-bottom:1rem;
 }
 .controls label {
-  display: flex;
-  flex-direction: column;
-  font-size: 1rem;
-  font-weight: 500;
-  gap: 0.25rem;
+  display:flex;
+  flex-direction:column;
+  font-size:1rem;
+  font-weight:500;
 }
 .controls input,
 .controls select {
-  font-size: 1rem;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #888;
-  border-radius: 0.25rem;
-  background: transparent;
-  color: var(--fg);
-  outline: none;
+  font-size:1rem;
+  padding:.5rem .75rem;
+  border:1px solid var(--evt-border);
+  border-radius:.25rem;
+  background:transparent;
+  color:var(--fg);
 }
-body.light .controls input,
-body.light .controls select { border-color: #ccc; }
-body.dark  .controls input,
-body.dark  .controls select { border-color: #555; }
 
+/* ====================
+   イベント設定
+   ==================== */
+.event-controls {
+  width:100%;
+  max-width:600px;
+  margin-bottom:1rem;
+}
+.evt-inputs {
+  display:flex;
+  gap:.5rem;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-bottom:.5rem;
+}
+.evt-inputs input {
+  width:100px;
+  font-size:1rem;
+  padding:.5rem;
+  border:1px solid var(--evt-border);
+  border-radius:.25rem;
+  text-align:center;
+  background:transparent;
+  color:var(--fg);
+}
+.evt-inputs select { font-size:1rem; padding:.5rem; }
+.btn.small {
+  padding:.5rem 1rem;
+  font-size:.9rem;
+}
+
+/* イベントリスト */
+#event-list {
+  list-style:none;
+  max-height:150px;
+  overflow:auto;
+}
+#event-list li {
+  display:flex;
+  justify-content:space-between;
+  padding:.25rem .5rem;
+  border-bottom:1px solid var(--evt-border);
+  font-size:.95rem;
+}
+#event-list li button {
+  background:transparent;
+  border:none;
+  color:inherit;
+  cursor:pointer;
+}
+
+/* ====================
+   スタート/一時停止/リセット
+   ==================== */
 .btn-group {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 0.5rem;
+  display:flex;
+  gap:.75rem;
+  margin-top:.5rem;
 }
 .btn {
-  padding: 0.75rem 1.25rem;
-  font-size: 1rem;
-  font-weight: 500;
-  border: none;
-  border-radius: 0.3rem;
-  color: #fff;
-  cursor: pointer;
-  transition: opacity 0.2s, transform 0.2s;
+  padding:.75rem 1.25rem;
+  font-size:1rem;
+  font-weight:500;
+  border:none;
+  border-radius:.3rem;
+  color:#fff;
+  cursor:pointer;
+  transition:opacity .2s,transform .2s;
 }
 .btn:hover,
-.btn:focus {
-  opacity: 0.9;
-  transform: translateY(-2px);
-}
-.btn:active {
-  transform: translateY(0);
-}
+.btn:focus { opacity:.9; transform:translateY(-2px); }
+.btn:active { transform:translateY(0); }
+.btn-start { background:var(--btn-start-bg); }
+.btn-pause { background:var(--btn-pause-bg); }
+.btn-reset { background:var(--btn-reset-bg); }
 
-/* ボタン色 */
-.btn-start { background: var(--btn-start-bg); }
-.btn-pause { background: var(--btn-pause-bg); }
-.btn-reset { background: var(--btn-reset-bg); }
-
-/*---------------------------------
-  ベル色＋アニメーション
----------------------------------*/
+/* ====================
+   ベル色＋ポップアニメ
+   ==================== */
 @keyframes bellPop {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.1); }
-  100% { transform: scale(1); }
+  0%   { transform:scale(1); }
+  50%  { transform:scale(1.1); }
+  100% { transform:scale(1); }
 }
 .timer-bell1 {
-  color: #ffac33 !important;
-  animation: bellPop 0.4s ease;
+  color:#ffac33!important;
+  animation:bellPop .4s ease;
 }
 .timer-bell2 {
-  color: #ff6666 !important;
-  animation: bellPop 0.4s ease;
+  color:#ff6666!important;
+  animation:bellPop .4s ease;
 }
 .timer-bell3 {
-  color: #bf55ec !important;
-  animation: bellPop 0.4s ease;
+  color:#bf55ec!important;
+  animation:bellPop .4s ease;
 }
 
-/*---------------------------------
-  レスポンシブ
----------------------------------*/
-@media (max-width: 600px) {
-  .timer-display { font-size: 4rem; }
-  .controls {
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-  .btn-group {
-    flex-direction: column;
-  }
+/* ====================
+   フローティングモード
+   ==================== */
+body.floating header,
+body.floating .controls,
+body.floating .event-controls,
+body.floating .btn-group,
+body.floating .header-buttons {
+  display:none!important;
+}
+body.floating .container {
+  padding:0;
+}
+body.floating .timer-display {
+  font-size:15vw;
+  margin:0;
+}
+
+/* ====================
+   レスポンシブ
+   ==================== */
+@media (max-width:600px) {
+  .timer-display { font-size:4rem; }
+  .controls { flex-direction:column; gap:1rem; }
+  .evt-inputs { flex-direction:column; }
+  .btn-group { flex-direction:column; width:100%; }
 }
