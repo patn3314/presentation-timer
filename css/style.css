@@ -1,24 +1,24 @@
 /* ======= 色テーマ変数 ======= */
 :root{
-  --bg:#fff;--fg:#222;
+  --bg:#fff;--fg:#000; /* 文字色をより濃く */
   --btn-start:#27ae60;--btn-pause:#e67e22;--btn-reset:#c0392b;
-  --evt-border:#888;
-  --tab-active: #4a90e2;
-  --tab-inactive: #e0e0e0;
-  --tab-text: #333;
+  --evt-border:#777; /* ボーダーを少し濃く */
+  --tab-active: #3498db; /* アクティブタブの色を調整 */
+  --tab-inactive: #ecf0f1; /* 非アクティブタブの色を調整 */
+  --tab-text: #2c3e50; /* タブテキストの色を調整 */
   --tab-text-active: #fff;
 }
 body.dark{
-  --bg:#222;--fg:#eee;
-  --evt-border:#555;
+  --bg:#1c1c1c;--fg:#f5f5f5; /* 背景をより暗く、文字をより明るく */
+  --evt-border:#444;
   --tab-active: #2980b9;
-  --tab-inactive: #444;
-  --tab-text: #ccc;
+  --tab-inactive: #333;
+  --tab-text: #bbb;
   --tab-text-active: #fff;
 }
 body{
   margin: 0;
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Segoe UI", Meiryo, sans-serif; /* フォントファミリーにMeiryo追加 */
   background: var(--bg);
   color: var(--fg);
   overflow: hidden;
@@ -32,57 +32,58 @@ body{
   width: 100%;
   max-width: 95%;
   margin: 0 auto;
-  padding: 10px 0;
+  padding: 15px 0; /* 上下パディングを少し増やす */
   box-sizing: border-box;
 }
 header{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 15px; /* 左右パディングを少し増やす */
 }
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.8rem; /* h1フォントサイズ増加 */
   margin: 0;
 }
 .icon-btn{
   background: none;
   border: none;
-  font-size: 2rem;
-  margin-left: 15px;
+  font-size: 2.2rem; /* アイコンボタンフォントサイズ増加 */
+  margin-left: 18px; /* アイコンボタンマージン増加 */
   color: var(--fg);
   cursor: pointer;
-  padding: 10px;
+  padding: 12px; /* アイコンボタンパディング増加 */
 }
-.icon-btn:hover{opacity: 0.8;}
+.icon-btn:hover{opacity: 0.7;}
 main{
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 15px;
   flex-direction: column;
 }
 .timer-display{
-  font-size: 15vw;
-  font-weight: 700;
+  font-size: 20vw; /* タイマー表示フォントサイズ増加 */
+  font-weight: bold; /* 太字に変更 */
   text-align: center;
   min-height: 1em;
   margin: 0;
+  letter-spacing: -0.02em; /* 文字間隔調整 */
 }
 
 /* ======= タブ関連スタイル ======= */
 .tab-nav {
   display: flex;
-  gap: 10px;
-  margin-left: 20px;
+  gap: 12px; /* タブ間のギャップ増加 */
+  margin-left: 25px; /* タブナビゲーションマージン増加 */
 }
 
 .tab-btn {
-  padding: 10px 20px;
-  font-size: 1.2rem;
+  padding: 12px 25px; /* タブボタンパディング増加 */
+  font-size: 1.3rem; /* タブボタンフォントサイズ増加 */
   border: none;
-  border-radius: 5px 5px 0 0;
+  border-radius: 8px 8px 0 0; /* 角丸調整 */
   background-color: var(--tab-inactive);
   color: var(--tab-text);
   cursor: pointer;
@@ -115,22 +116,22 @@ main{
 /* ======= 設定フィールドセット ======= */
 .setting-fieldset {
   border: 2px solid var(--evt-border);
-  padding: 15px;
-  border-radius: 10px;
-  width: 350px;
-  margin-bottom: 20px;
-  min-height: 100px;
+  padding: 20px; /* フィールドセットパディング増加 */
+  border-radius: 12px; /* 角丸調整 */
+  width: 400px; /* 幅を少し広げる */
+  margin-bottom: 25px; /* マージン増加 */
+  min-height: 110px;
   box-sizing: border-box;
 }
 
 .setting-legend {
-  font-size: 1.8rem;
-  padding: 0 10px;
-  font-weight: 500;
+  font-size: 2rem; /* 設定レジェンドフォントサイズ増加 */
+  padding: 0 12px;
+  font-weight: 600; /* 少し太く */
 }
 
 .setting-content {
-  padding-top: 10px;
+  padding-top: 15px;
   display: flex;
   flex-direction: column;
 }
@@ -141,43 +142,43 @@ main{
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  margin: 20px auto;
-  padding: 0 10px;
+  margin: 25px auto;
+  padding: 0 15px;
   overflow-y: auto;
-  max-height: calc(100vh - 150px);
+  max-height: calc(100vh - 180px); /* 最大高さ調整 */
 }
 .ctrl-block {
   display: flex;
   flex-direction: column;
 }
 .ctrl-label {
-  font-size: 1.8rem;
+  font-size: 2rem; /* コントロールラベルフォントサイズ増加 */
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .time-select {
   display: flex;
   align-items: center;
-  font-size: 1.8rem;
-  gap: 10px;
+  font-size: 2rem; /* 時間選択フォントサイズ増加 */
+  gap: 12px;
 }
 .large-select {
-  font-size: 1.5rem;
-  padding: 8px;
-  border-radius: 6px;
+  font-size: 1.8rem; /* セレクトボックスフォントサイズ増加 */
+  padding: 10px; /* パディング増加 */
+  border-radius: 8px;
   border: 2px solid var(--evt-border);
   background-color: var(--bg);
   color: var(--fg);
-  min-width: 80px;
+  min-width: 90px;
 }
 .bell-row {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
-  font-size: 1.5rem;
+  margin-bottom: 18px;
+  font-size: 1.8rem; /* ベル設定行フォントサイズ増加 */
 }
 .bell-label {
-  min-width: 80px;
+  min-width: 90px; /* ラベル幅調整 */
   display: inline-block;
 }
 .bell-row:last-child {
@@ -188,47 +189,50 @@ main{
 .btn-group{
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin: 20px 0;
-  padding: 0 10px;
+  gap: 25px; /* ボタン間ギャップ増加 */
+  margin: 25px 0;
+  padding: 0 15px;
 }
 .btn{
-  font-size: 1.5rem;
-  padding: 12px 25px;
+  font-size: 1.8rem; /* ボタンフォントサイズ増加 */
+  padding: 15px 30px; /* ボタンパディング増加 */
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   color: white;
   cursor: pointer;
-  min-width: 120px;
+  min-width: 140px;
   transition: all 0.3s;
+  font-weight: 500; /* 少し太く */
 }
-.btn:hover{opacity: 0.9;}
+.btn:hover{opacity: 0.85; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1);}
+.btn:active{transform: translateY(0); box-shadow: none;}
 .btn-start{background-color: var(--btn-start);}
 .btn-pause{background-color: var(--btn-pause);}
 .btn-reset{background-color: var(--btn-reset);}
 
 /* ======= ベル色 ======= */
-.bell1{color: #f39c12;}  /* 黄 */
-.bell2{color: #e74c3c;}  /* 赤 */
-.bell3{color: #c0392b; font-weight: 900;} /* 濃赤 */
+.bell1{color: #f1c40f;}  /* 黄色変更 (より明るく) */
+.bell2{color: #e67e22;}  /* オレンジ色に変更 */
+.bell3{color: #e74c3c; font-weight: bold;} /* 赤色に変更、太字 */
 
 /* ======= フローティングウィンドウ ======= */
 body.floating .container{
   padding: 0;
 }
 body.floating header{
-  padding: 5px 10px;
+  padding: 8px 12px; /* パディング調整 */
 }
 body.floating h1{
-  font-size: 1.5rem;
+  font-size: 1.8rem; /* フォントサイズ調整 */
 }
 body.floating .icon-btn{
-  font-size: 1.5rem;
-  margin-left: 10px;
-  padding: 5px;
+  font-size: 1.8rem;
+  margin-left: 12px;
+  padding: 8px;
 }
 body.floating .timer-display{
-  font-size: 10vw;
+  font-size: 18vw; /* フローティング時タイマー表示フォントサイズ増加 */
+  letter-spacing: -0.01em;
 }
 body.floating .controls,
 body.floating .btn-group{
@@ -237,71 +241,104 @@ body.floating .btn-group{
 
 /* ベル情報表示 */
 .bell-info {
-  font-size: 1.2rem;
-  background-color: rgba(0, 0, 0, 0.1);
-  padding: 8px 15px;
-  border-radius: 5px;
-  margin-top: 15px;
+  font-size: 1.4rem; /* フォントサイズ増加 */
+  background-color: rgba(0, 0, 0, 0.15); /* 背景少し濃く */
+  padding: 10px 18px; /* パディング増加 */
+  border-radius: 8px;
+  margin-top: 18px;
   text-align: center;
   max-width: 90%;
+  color: var(--fg); /* 文字色をテーマに合わせる */
 }
 
 body.floating .bell-info {
-  font-size: 1rem;
-  margin-top: 10px;
+  font-size: 1.3rem; /* フローティング時フォントサイズ調整 */
+  margin-top: 12px;
+  padding: 8px 15px;
 }
 
 /* レスポンシブ対応 */
 @media (max-width: 768px) {
   h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
   .tab-btn {
-    padding: 8px 15px;
-    font-size: 1rem;
+    padding: 10px 18px;
+    font-size: 1.1rem;
   }
   .setting-fieldset {
-    width: 300px;
-    min-height: 90px;
+    width: 90%; /* 幅を相対指定に */
+    max-width: 350px; /* 最大幅設定 */
+    min-height: 100px;
   }
   
   .setting-legend {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
   .large-select {
-    font-size: 1.2rem;
-    min-width: 60px;
+    font-size: 1.5rem;
+    min-width: 70px;
+  }
+  .timer-display{
+    font-size: 22vw;
+  }
+  body.floating .timer-display{
+    font-size: 20vw;
   }
 }
 
 @media (max-width: 480px) {
   header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch; /* stretchに変更 */
+    gap: 10px; /* 要素間のギャップ */
   }
   .tab-nav {
     margin: 10px 0;
     width: 100%;
+    justify-content: center; /* 中央揃え */
   }
   .header-buttons {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-around; /* ボタンを均等配置 */
+  }
+  .icon-btn {
+    margin-left: 0; /* マージンリセット */
   }
   .timer-display {
-    font-size: 18vw;
+    font-size: 25vw; /* スマホ表示時さらに大きく */
   }
   .btn-group {
     flex-direction: column;
     width: 100%;
-    max-width: 250px;
-    margin: 10px auto;
+    max-width: 300px; /* ボタン幅調整 */
+    margin: 15px auto;
   }
   .btn {
     width: 100%;
+    font-size: 1.6rem;
+    padding: 12px 20px;
   }
   .setting-fieldset {
-    width: 280px;
-    min-height: 80px;
+    width: 95%;
+    max-width: none;
+    min-height: 90px;
+  }
+  .setting-legend {
+    font-size: 1.6rem;
+  }
+  .large-select {
+    font-size: 1.4rem;
+  }
+  body.floating .timer-display{
+    font-size: 22vw;
+  }
+  .bell-info {
+    font-size: 1.2rem;
+  }
+  body.floating .bell-info {
+    font-size: 1.1rem;
   }
 }
+
