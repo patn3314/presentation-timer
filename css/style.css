@@ -241,7 +241,7 @@ body.floating .btn-group{
 
 /* ベル情報表示 */
 .bell-info {
-  font-size: 1.4rem; /* フォントサイズ増加 */
+  font-size: 6rem; /* フォントサイズ増加 */
   background-color: rgba(0, 0, 0, 0.15); /* 背景少し濃く */
   padding: 10px 18px; /* パディング増加 */
   border-radius: 8px;
@@ -252,7 +252,7 @@ body.floating .btn-group{
 }
 
 body.floating .bell-info {
-  font-size: 1.3rem; /* フローティング時フォントサイズ調整 */
+  font-size: 6rem; /* フローティング時フォントサイズ調整 */
   margin-top: 12px;
   padding: 8px 15px;
 }
